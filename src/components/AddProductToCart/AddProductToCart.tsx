@@ -14,19 +14,19 @@ export default function AddProductToCart({ product }: AddProductToCartProps) {
   const { data = [], isFetching } = useCart();
   const { mutate: upsertCart } = useUpsertCart();
   const invalidateCart = useInvalidateCart();
-  const cartItem = data.find((i) => i.product.id === product.id);
+  const cartItem = data.find((i) => i.product_id === product.id);
 
   const addProduct = () => {
-    upsertCart(
-      { product, count: cartItem ? cartItem.count + 1 : 1 },
+    product.id ? upsertCart(
+      { product_id: product.id, count: 1 },
       { onSuccess: invalidateCart }
-    );
+    ) : null;
   };
 
   const removeProduct = () => {
     if (cartItem) {
       upsertCart(
-        { ...cartItem, count: cartItem.count - 1 },
+        { ...cartItem, count: -1 },
         { onSuccess: invalidateCart }
       );
     }

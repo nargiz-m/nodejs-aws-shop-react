@@ -59,11 +59,10 @@ export default function PageCart() {
       return;
     }
     const values = {
-      items: data.map((i) => ({
-        productId: i.product_id,
-        count: i.count,
-      })),
-      address,
+      delivery: address,
+      payment: {
+        type: 'card'
+      }
     };
 
     submitOrder(values as Omit<Order, "id">, {
@@ -110,7 +109,7 @@ export default function PageCart() {
         />
       )}
       {activeStep === CartStep.ReviewOrder && (
-        <ReviewOrder address={address} items={data} />
+        <ReviewOrder address={address} />
       )}
       {activeStep === CartStep.Success && <Success />}
       {!isCartEmpty &&

@@ -22,7 +22,7 @@ export function useInvalidateOrders() {
 
 export function useUpdateOrderStatus() {
   return useMutation(
-    (values: { id: string; status: OrderStatus; comment: string }) => {
+    (values: { id: string; comment: string }) => {
       const { id, ...data } = values;
       return axios.put(`${API_PATHS.order}/order/${id}/status`, data, {
         headers: {
@@ -35,7 +35,7 @@ export function useUpdateOrderStatus() {
 
 export function useSubmitOrder() {
   return useMutation((values: Omit<Order, "id">) => {
-    return axios.put<Omit<Order, "id">>(`${API_PATHS.order}/order`, values, {
+    return axios.post<Omit<Order, "id">>(`${API_PATHS.order}/api/profile/cart/checkout`, values, {
       headers: {
         Authorization: `Basic ${localStorage.getItem("authorization_token")}`,
       },
